@@ -35,4 +35,11 @@ public class PersonService{
         PersonDTO personDTO = personMapper.toDTO(person);
         return personDTO;
     }
+
+    @Transactional
+    public PersonDTO create(PersonDTO personDTO){
+        PersonEntity person = personMapper.toEntity(personDTO);
+        personRepository.save(person);
+        return personDTO;
+    }
 }
