@@ -35,4 +35,15 @@ public class PersonService{
         PersonDTO personDTO = personMapper.toDTO(person);
         return personDTO;
     }
+
+    @Transactional
+    public PersonDTO update(long id,PersonDTO personDTO){
+        PersonEntity person = personMapper.toEntity(personDTO);
+        if(personRepository.findById(id).isEmpty()){
+            throw new PersonNotFoundException();
+        }
+        person.setId(id);
+        personRepository.save(person);
+        return personMapper.toDTO(person);
+    }
 }
