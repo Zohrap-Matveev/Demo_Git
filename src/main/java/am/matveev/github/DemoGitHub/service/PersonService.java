@@ -2,6 +2,7 @@ package am.matveev.github.DemoGitHub.service;
 
 import am.matveev.github.DemoGitHub.dto.PersonDTO;
 import am.matveev.github.DemoGitHub.entity.PersonEntity;
+import am.matveev.github.DemoGitHub.exception.PersonNotFoundException;
 import am.matveev.github.DemoGitHub.mapper.PersonMapper;
 import am.matveev.github.DemoGitHub.repository.PersonRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,13 @@ public class PersonService{
                 .map(personMapper::toDTO)
                 .collect(Collectors.toList());
         return personDTOS;
+    }
+
+    @Transactional(readOnly = true)
+    public PersonDTO findOne(long id){
+        PersonEntity person = personRepository.findById(id)
+                .orElseThrow(PersonNotFoundException :: new);
+        PersonDTO personDTO = personMapper.toDTO(person);
+        return personDTO;
     }
 }
