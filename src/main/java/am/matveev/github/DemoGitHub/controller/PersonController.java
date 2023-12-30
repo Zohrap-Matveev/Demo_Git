@@ -29,4 +29,8 @@ public class PersonController{
     public PersonDTO create(@RequestBody @Valid PersonDTO personDTO){
         return personService.create(personDTO);
     }
+    @PutMapping("/{id}")
+    public PersonDTO update(@PathVariable long id,@RequestBody @Valid PersonDTO personDTO){
+        return personService.update(id,personDTO);
+    }
 }
